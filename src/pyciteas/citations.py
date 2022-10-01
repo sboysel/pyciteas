@@ -5,16 +5,13 @@ def citations(product):
     data = request(product)
     if not data:
         raise ValueError('No data returned')
-    return data
+    return Citations(data)
 
 
 class Citations:
     """https://citeas.org/api#citations-object"""
-    def __init__(self, product):
-        data = citations(product)
-        # self.citations = [Citation(x) for x in data['citations']]
+    def __init__(self, data):
         self.citations = {x['style_shortname']: Citation(x) for x in data['citations']}
-        # self.exports = [Export(x) for x in data['exports']]
         self.exports = {x['export_name']: Export(x) for x in data['exports']}
         self.metadata = Metadata(data['metadata'])
         self.name = data['name']
@@ -40,7 +37,6 @@ class Citation:
         s += f'style_fullname: {self.style_fullname}\n'
         s += f'style_shortname: {self.style_shortname}\n'
         return s
-
 
 class Export:
     """https://citeas.org/api#citations-object"""
@@ -117,7 +113,7 @@ class Provenance:
         return s
 
 if __name__ == '__main__':
-    c = Citations('https://github.com/datacite/maremma')
+    c = citations('https://github.com/datacite/maremma')
     print(c)
     print(c.citations['apa'])
     print(c.exports['bibtex'])
