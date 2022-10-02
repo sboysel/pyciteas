@@ -46,5 +46,5 @@ def test_bibtex():
          ',journal={Proceedings of the IEEE},volume={93},number={},pages={216--231}'
          ',year={2005},publisher={Institute of Electrical and Electronics Engineers'
          ' (IEEE)},author={Frigo, M. and Johnson, S.G.}}')
-    assert CITATIONS[0].bibtex() == s
+    assert CITATIONS[0].bibtex(strip_newlines=True) == s
 
