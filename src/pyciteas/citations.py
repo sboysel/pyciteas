@@ -1,7 +1,13 @@
 from src.pyciteas.request import request
 
 def citations(product):
-    """"""
+    """
+    Query the CiteAs API for the citation for a product
+
+    product: string         Reference to query
+
+    returns: Citations object
+    """
     data = request(product)
     if not data:
         raise ValueError('No data returned')
@@ -13,7 +19,7 @@ class Citations:
     def __init__(self, data):
         self.citations = {x['style_shortname']: Citation(x) for x in data['citations']}
         self.exports = {x['export_name']: Export(x) for x in data['exports']}
-        self.metadata = Metadata(data['metadata'])
+        self.metadata = data['metadata']
         self.name = data['name']
         self.provenance = [Provenance(x) for x in data['provenance']]
         self.url = data['url']
@@ -23,6 +29,11 @@ class Citations:
         s = f'name: {self.name}\n'
         s += f'url: {self.url}\n'
         return s
+    def bibtex(self):
+        """return citation export as bibtex string.  Removes all newline
+        characters"""
+        bibtex = self.exports['bibtex'].export
+        return ''.join(bibtex.splitlines())
 
 class Citation:
     """https://citeas.org/api#citations-object"""
@@ -50,36 +61,36 @@ class Export:
         s += f'export_name: {self.export_name}\n'
         return s
 
-class Metadata:
-    """https://citeas.org/api#citations-object"""
-    def __init__(self, data):
-        """
-        From the documentation:
+# class Metadata:
+#     """https://citeas.org/api#citations-object"""
+#     def __init__(self, data):
+#         """
+#         From the documentation:
 
-                Metadata varies by source, but typically includes the below fields.
+#                 Metadata varies by source, but typically includes the below fields.
 
-        """
-        self.DOI = data['DOI']
-        self.URL = data['URL']
-        self.abstract = data['abstract']
-        self.author = data['author']
-        self.id = data['id']
-        self.title = data['title']
-        self.year = data['year']
-        # any additional fields
-        self.metadata_all = data
+#         """
+#         self.DOI = data['DOI']
+#         self.URL = data['URL']
+#         self.abstract = data['abstract']
+#         self.author = data['author']
+#         self.id = data['id']
+#         self.title = data['title']
+#         self.year = data['year']
+#         # any additional fields
+#         self.metadata_all = data
 
-    def __repr__(self):
-        return 'Metadata()'
-    def __str__(self):
-        s = f'DOI: {self.DOI}\n'
-        s += f'URL: {self.URL}\n'
-        s += f'abstract: {self.abstract}\n'
-        s += f'author: {self.author}\n'
-        s += f'id: {self.id}\n'
-        s += f'title: {self.title}\n'
-        s += f'year: {self.year}\n'
-        return s
+#     def __repr__(self):
+#         return 'Metadata()'
+#     def __str__(self):
+#         s = f'DOI: {self.DOI}\n'
+#         s += f'URL: {self.URL}\n'
+#         s += f'abstract: {self.abstract}\n'
+#         s += f'author: {self.author}\n'
+#         s += f'id: {self.id}\n'
+#         s += f'title: {self.title}\n'
+#         s += f'year: {self.year}\n'
+#         return s
 
 class Provenance:
     """https://citeas.org/api#citations-object"""
@@ -112,10 +123,10 @@ class Provenance:
         s += f'subject: {self.subject}\n'
         return s
 
-if __name__ == '__main__':
-    c = citations('https://github.com/datacite/maremma')
-    print(c)
-    print(c.citations['apa'])
-    print(c.exports['bibtex'])
-    print(c.metadata)
-    print(c.provenance[0])
+# if __name__ == '__main__':
+#     c = citations('https://github.com/datacite/maremma')
+#     print(c)
+#     print(c.citations['apa'])
+#     print(c.exports['bibtex'])
+#     print(c.metadata)
+#     print(c.provenance[0])
