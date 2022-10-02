@@ -2,20 +2,42 @@ from src.pyciteas.request import request
 
 def citations(product):
     """
-    Query the CiteAs API for the citation for a product
+    Query the citations endpoint of the CiteAs API for the reference data for a
+    specified product.
 
-    product: string         Reference to query
+    Reference: https://citeas.org/api#citations-object
 
-    returns: Citations object
+    Parameters
+    ----------
+    product : str
+        Reference to query.
+
+    Raises
+    ------
+    ValueError
+        If the request returns a non-200 status code, there is no data returned
+        and therefore nothing to be parsed.
+
+    Returns
+    -------
+    Citations
+        A Citations object containing the structured data from response of the
+        request to the citations endpoint.
     """
+
     data = request(product)
+
     if not data:
         raise ValueError('No data returned')
+
     return Citations(data)
 
 
 class Citations:
-    """https://citeas.org/api#citations-object"""
+    """
+    Reference: https://citeas.org/api#citations-object
+    """
+
     def __init__(self, data):
         self.citations = {x['style_shortname']: Citation(x) for x in data['citations']}
         self.exports = {x['export_name']: Export(x) for x in data['exports']}
@@ -23,77 +45,72 @@ class Citations:
         self.name = data['name']
         self.provenance = [Provenance(x) for x in data['provenance']]
         self.url = data['url']
+
     def __repr__(self):
         return 'Citations()'
+
     def __str__(self):
         s = f'name: {self.name}\n'
         s += f'url: {self.url}\n'
         return s
-    def bibtex(self):
-        """return citation export as bibtex string.  Removes all newline
-        characters"""
+
+    def bibtex(self, strip_newlines=False):
+        """
+        Return citation export as bibtex string.  Optionally removes all
+        newline characters.
+        """
+
         bibtex = self.exports['bibtex'].export
-        return ''.join(bibtex.splitlines())
+
+        if strip_newlines:
+            bibtex = ''.join(bibtex.splitlines())
+
+        return bibtex
+
 
 class Citation:
-    """https://citeas.org/api#citations-object"""
+    """
+    Reference: https://citeas.org/api#citations-object
+    """
+
     def __init__(self, data):
         self.citation = data['citation']
         self.style_fullname = data['style_fullname']
         self.style_shortname = data['style_shortname']
+
     def __repr__(self):
         return 'Citation()'
+
     def __str__(self):
         s = f'citation: {self.citation}\n'
         s += f'style_fullname: {self.style_fullname}\n'
         s += f'style_shortname: {self.style_shortname}\n'
         return s
 
+
 class Export:
-    """https://citeas.org/api#citations-object"""
+    """
+    Reference: https://citeas.org/api#citations-object
+    """
+
     def __init__(self, data):
         self.export = data['export']
         self.export_name = data['export_name']
+
     def __repr__(self):
         return 'Export()'
+
     def __str__(self):
         s = f'export: {self.export}\n'
         s += f'export_name: {self.export_name}\n'
         return s
 
-# class Metadata:
-#     """https://citeas.org/api#citations-object"""
-#     def __init__(self, data):
-#         """
-#         From the documentation:
-
-#                 Metadata varies by source, but typically includes the below fields.
-
-#         """
-#         self.DOI = data['DOI']
-#         self.URL = data['URL']
-#         self.abstract = data['abstract']
-#         self.author = data['author']
-#         self.id = data['id']
-#         self.title = data['title']
-#         self.year = data['year']
-#         # any additional fields
-#         self.metadata_all = data
-
-#     def __repr__(self):
-#         return 'Metadata()'
-#     def __str__(self):
-#         s = f'DOI: {self.DOI}\n'
-#         s += f'URL: {self.URL}\n'
-#         s += f'abstract: {self.abstract}\n'
-#         s += f'author: {self.author}\n'
-#         s += f'id: {self.id}\n'
-#         s += f'title: {self.title}\n'
-#         s += f'year: {self.year}\n'
-#         return s
 
 class Provenance:
-    """https://citeas.org/api#citations-object"""
+    """
+    Reference: https://citeas.org/api#citations-object
+    """
+
     def __init__(self, data):
         """
         From the documentation:
@@ -113,6 +130,7 @@ class Provenance:
 
     def __repr__(self):
         return 'Metadata()'
+
     def __str__(self):
         s = f'content_url: {self.content_url}\n'
         s += f'found_via_proxy_type: {self.found_via_proxy_type}\n'
@@ -122,11 +140,3 @@ class Provenance:
         s += f'parent_subject: {self.parent_subject}\n'
         s += f'subject: {self.subject}\n'
         return s
-
-# if __name__ == '__main__':
-#     c = citations('https://github.com/datacite/maremma')
-#     print(c)
-#     print(c.citations['apa'])
-#     print(c.exports['bibtex'])
-#     print(c.metadata)
-#     print(c.provenance[0])
