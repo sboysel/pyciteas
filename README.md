@@ -4,11 +4,23 @@ A Python client for the CiteAs API.
 
 From the CiteAs [About page](https://citeas.org/about):
 
-    CiteAs is a way to get the correct citation for diverse research products including, software, datasets, preprints, and traditional articles. By making it easier to cite software and other "alternative" scholarly products, we aim to help the creators of such products get full credit for their work.
-
-    CiteAs is a small part of a collaborative grant between OurResearch and James Howison at the University of Texas-Austin. Funded by the Alfred P. Sloan Foundation, the focus of this grant is to create a big database of research software, automatically extracted from millions of open-access scholarly articles using machine-learning techniques. Along with the database, we'll also make three small prototype applications to show off how the data can be used in cool ways. CiteAs is one of these applications.
-
-    We're still working on creating the database. But while that's in progress, we thought it'd be cool to release CiteAs, even though it still is missing the majority of data it will ultimately use. Feel free to kick the tires, and let us know what you think!
+> CiteAs is a way to get the correct citation for diverse research products
+> including, software, datasets, preprints, and traditional articles. By making
+> it easier to cite software and other "alternative" scholarly products, we aim
+> to help the creators of such products get full credit for their work.
+>
+> CiteAs is a small part of a collaborative grant between OurResearch and James
+> Howison at the University of Texas-Austin. Funded by the Alfred P. Sloan
+> Foundation, the focus of this grant is to create a big database of research
+> software, automatically extracted from millions of open-access scholarly
+> articles using machine-learning techniques. Along with the database, we'll
+> also make three small prototype applications to show off how the data can be
+> used in cool ways. CiteAs is one of these applications.
+>
+> We're still working on creating the database. But while that's in progress, we
+> thought it'd be cool to release CiteAs, even though it still is missing the
+> majority of data it will ultimately use. Feel free to kick the tires, and let
+> us know what you think!
 
 [API Documentation](https://citeas.org/api)
 
