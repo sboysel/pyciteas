@@ -4,6 +4,17 @@ https://citeas.org/api
 
 ## usage
 
+CiteAs requests API users include their email address with queries so that they
+can track API usage.  Create a config file named `pyciteas.ini` containing your
+email address in the project root directory. 
+
+```ini
+[pyciteas]
+email = test@example.com
+```
+
+`pyciteas` will default to `test@example.com` if no proper config file is found.
+
 Get the status of the CiteAs API.  Returns a `Status()` object if the request
 returns a `200` code.
 
