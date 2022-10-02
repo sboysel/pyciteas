@@ -42,9 +42,10 @@ def test_citations_provenance():
             assert isinstance(p, Provenance)
 
 def test_bibtex():
+    c = CITATIONS[0]
     s = ('@journal-article{ITEM1, title={The Design and Implementation of FFTW3}'
          ',journal={Proceedings of the IEEE},volume={93},number={},pages={216--231}'
          ',year={2005},publisher={Institute of Electrical and Electronics Engineers'
          ' (IEEE)},author={Frigo, M. and Johnson, S.G.}}')
-    assert CITATIONS[0].bibtex(strip_newlines=True) == s
+    assert c.bibtex(strip_newlines=True) == s
 

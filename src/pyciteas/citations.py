@@ -84,25 +84,25 @@ class Citations:
         """
         Bibtex export
         """
-        self.export('bibtex', strip_newlines=strip_newlines)
+        return self.export('bibtex', strip_newlines=strip_newlines)
 
     def csv(self, strip_newlines=False):
         """
         CSV export
         """
-        self.export('csv', strip_newlines=strip_newlines)
+        return self.export('csv', strip_newlines=strip_newlines)
 
     def enw(self, strip_newlines=False):
         """
         ENW export
         """
-        self.export('enw', strip_newlines=strip_newlines)
+        return self.export('enw', strip_newlines=strip_newlines)
 
     def ris(self, strip_newlines=False):
         """
         RIS export
         """
-        self.export('ris', strip_newlines=strip_newlines)
+        return self.export('ris', strip_newlines=strip_newlines)
 
 
 class Citation:
