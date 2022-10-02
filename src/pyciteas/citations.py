@@ -54,18 +54,55 @@ class Citations:
         s += f'url: {self.url}\n'
         return s
 
-    def bibtex(self, strip_newlines=False):
+    def export(self, name, strip_newlines=False):
         """
-        Return citation export as bibtex string.  Optionally removes all
-        newline characters.
+        Return citation export as a string in a format specified by name.  Optionally
+        removes all newline characters.
+
+        Parameters
+        ----------
+        name : str
+            Must be one of 'bibtex', 'csv', 'ris', 'enw'.
+        strip_newlines : bool
+            If True, removes all newline characters from the exported citation
+            string.  Default: False.
+
+        Returns
+        -------
+        export
+            A string for the citation in the format specified by name
         """
 
-        bibtex = self.exports['bibtex'].export
+        exp = self.exports[name].export
 
         if strip_newlines:
-            bibtex = ''.join(bibtex.splitlines())
+            exp = ''.join(exp.splitlines())
 
-        return bibtex
+        return exp
+
+    def bibtex(self, strip_newlines=False):
+        """
+        Bibtex export
+        """
+        self.export('bibtex', strip_newlines=strip_newlines)
+
+    def csv(self, strip_newlines=False):
+        """
+        CSV export
+        """
+        self.export('csv', strip_newlines=strip_newlines)
+
+    def enw(self, strip_newlines=False):
+        """
+        ENW export
+        """
+        self.export('enw', strip_newlines=strip_newlines)
+
+    def ris(self, strip_newlines=False):
+        """
+        RIS export
+        """
+        self.export('ris', strip_newlines=strip_newlines)
 
 
 class Citation:
