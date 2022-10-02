@@ -21,6 +21,6 @@ def status():
         raise ValueError('No data returned')
     return Status(data)
 
-if __name__ == '__main__':
-    s = status()
-    print(s)
+# if __name__ == '__main__':
+#     s = status()
+#     print(s)

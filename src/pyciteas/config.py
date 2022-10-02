@@ -9,6 +9,6 @@ class Config:
         except:
             self.email = 'test@example.com'
 
-if __name__ == '__main__':
-    c = Config()
-    print(f'email: {c.email}')
+# if __name__ == '__main__':
+#     c = Config()
+#     print(f'email: {c.email}')
